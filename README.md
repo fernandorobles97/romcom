@@ -14,15 +14,17 @@ This Romantic Novel Cover Generator creates random novel covers and allows the u
 
 ### Preview of App:
 [//]: <> (Provide ONE gif or screenshot of your application - choose the "coolest" piece of functionality to show off.)
+<img width="919" alt="Screenshot 2023-03-31 at 2 27 07 PM" src="https://user-images.githubusercontent.com/118419729/229226043-f534fed3-e3c2-453c-95d8-ee54c539fcf9.png">
 
 
 ### Context:
 [//]: <> (Give some context for the project here. How long did you have to work on it? How far into the Turing program are you?)
-This project took about 15 hours to complete. We are in the Front End turing program in Mod 1. 
+This project took about 15 hours to complete. We are in the Front End turing program in Mod 1, week 2.
 
 ### Contributors:
 [//]: <> (Who worked on this application? Link to their GitHubs.)
-
+<a href= "https://github.com/sakisandrac">Saki Chatphatthanasiri </a><br>
+<a href= "https://github.com/fernandorobles97">Fernando Robles</a>
 
 ### Learning Goals:
 [//]: <> (What were the learning goals of this project? What tech did you work with?)

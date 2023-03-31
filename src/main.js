@@ -23,14 +23,14 @@ var savedCovers = [
 var currentCover;
 
 // Add your event listeners here 
-randomCoverButton.addEventListener('click', displayRandomCover)
 window.addEventListener('load', randomCover);
-makeCoverButton.addEventListener('click', switchFormView)
-viewSavedButton.addEventListener('click', switchSavedView)
-homeButton.addEventListener('click', switchHomeView)
-makeBookButton.addEventListener('click', makeBookClick)
-saveCoverButton.addEventListener('click', saveCover)
-savedCoversSection.addEventListener('dblclick', deleteCover)
+randomCoverButton.addEventListener('click', displayRandomCover);
+makeCoverButton.addEventListener('click', switchFormView);
+viewSavedButton.addEventListener('click', switchSavedView);
+homeButton.addEventListener('click', switchHomeView);
+makeBookButton.addEventListener('click', makeBookClick);
+saveCoverButton.addEventListener('click', saveCover);
+savedCoversSection.addEventListener('dblclick', deleteCover);
 
 // Create your event handlers and other functions here 👇
 function createCover(imgSrc, title, descriptor1, descriptor2) {
@@ -40,8 +40,9 @@ function createCover(imgSrc, title, descriptor1, descriptor2) {
     title: title,
     tagline1: descriptor1,
     tagline2: descriptor2
-  }
-  return cover
+  };
+
+  return cover;
 }
 
 function getRandomIndex(array) {
@@ -54,44 +55,55 @@ function getIndex() {
   taglineIndex: getRandomIndex(descriptors),
   taglineIndex2: getRandomIndex(descriptors),
   coverIndex: getRandomIndex(covers)
-  }
-return index;
+  };
+
+  return index;
 }
 
 function switchFormView() {
   form.reset();
 
   removeHiddenClass([formView, homeButton]);
+
   addHiddenClass([homeView, saveCoverButton, randomCoverButton, savedView]);
 }
 
 function switchSavedView() {
   addHiddenClass([homeView, formView, saveCoverButton,randomCoverButton]);
+
   removeHiddenClass([savedView, homeButton]);
+
   renderCovers();
 }
 
 function switchHomeView() {
   addHiddenClass([formView, savedView,homeButton]);
+
   removeHiddenClass([homeView, saveCoverButton,viewSavedButton, makeCoverButton, randomCoverButton]);
 }
 
 function makeBookClick(event) {
   event.preventDefault();
+
   makeBook();
+}
+
+function saveUserData() {
+  covers.push(coverInput.value);
+  titles.push(titleInput.value);
+  descriptors.push(descriptor1Input.value, descriptor2Input.value);
 }
 
 function makeBook() {
   currentCover = createCover(coverInput.value, titleInput.value, descriptor1Input.value, descriptor2Input.value);
 
-  covers.push(coverInput.value);
-  titles.push(titleInput.value);
-  descriptors.push(descriptor1Input.value, descriptor2Input.value);
+  saveUserData();
 
   switchHomeView();
+
   displayMainCover(currentCover);
 
-  return currentCover
+  return currentCover;
 }
 
 function removeHiddenClass(elements) {
@@ -109,10 +121,10 @@ function addHiddenClass(elements) {
 function randomCover() {
   var index = getIndex();
  
-   currentCover = createCover(covers[index.coverIndex],titles[index.titlesIndex],descriptors[index.taglineIndex], descriptors[index.taglineIndex2])
-   displayMainCover(currentCover);
+  currentCover = createCover(covers[index.coverIndex],titles[index.titlesIndex],descriptors[index.taglineIndex], descriptors[index.taglineIndex2]);
+  displayMainCover(currentCover);
  
-   return currentCover
+  return currentCover;
  }
 
 function displayMainCover(cover) {
@@ -125,22 +137,31 @@ function displayRandomCover() {
   displayMainCover(randomCover());
 }
 
-function searchSaved(book){
+function searchSaved(cover){
   for (var i= 0; i < savedCovers.length; i++){
-    if (savedCovers[i].id === book.id){
-     return true
+    if (savedCovers[i].id === cover.id){
+     return true;
     }
   }
 }
 
+function searchSavedID(event) {
+  for (var i= 0; i < savedCovers.length; i++) {
+    if (savedCovers[i].id.value === event.target.id.value){
+        return true;
+    }  
+  }
+}
+
 function saveCover() {
-  if(searchSaved(currentCover) !== true){
-      savedCovers.push(currentCover)
+  if (!searchSaved(currentCover)){
+      savedCovers.push(currentCover);
   }
 }
 
 function renderCovers() {
-  savedCoversSection.innerHTML = " "
+  savedCoversSection.innerHTML = " ";
+
   for (var i=0; i < savedCovers.length; i++){
     savedCoversSection.innerHTML += `
       <section class="mini-cover">
@@ -153,19 +174,14 @@ function renderCovers() {
   }
 }
 
-function searchSavedID(event) {
-  for (var i= 0; i < savedCovers.length; i++) {
-    if (savedCovers[i].id.value === event.target.id.    value){
-        return true
-    }  
-  }
-}
-
 function deleteCover(event) {
  if (searchSavedID(event)) {
-    var ids =savedCovers.map((element) => {return element.id})
-    var currentId = ids.indexOf(parseInt(event.target.id))
-    savedCovers.splice(currentId, 1)
-    event.target.parentElement.remove()
+    var ids= savedCovers.map(function(element) {
+      return element.id;
+    });
+
+    var currentId = ids.indexOf(parseInt(event.target.id));
+    savedCovers.splice(currentId, 1);
+    event.target.parentElement.remove();
   }
 }

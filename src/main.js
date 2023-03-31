@@ -29,7 +29,11 @@ makeCoverButton.addEventListener('click', switchFormView)
 viewSavedButton.addEventListener('click', switchSavedView)
 homeButton.addEventListener('click', switchHomeView)
 makeBookButton.addEventListener('click', makeBookClick)
-saveCoverButton.addEventListener('click', saveCover)
+saveCoverButton.addEventListener('click', function() {
+  saveCover();
+  // renderSavedCovers();
+}) 
+savedCoversSection.addEventListener('dblclick', deleteCover)
 
 // Create your event handlers and other functions here 👇
 function createCover(imgSrc, title, descriptor1, descriptor2) {
@@ -125,7 +129,7 @@ function displayRandomCover() {
 
 function searchSaved(book){
   for (var i= 0; i < savedCovers.length; i++){
-    if (savedCovers[i].id === book.id){
+    if (cover.id === book.id){
      return true
     }
   }
@@ -134,16 +138,34 @@ function searchSaved(book){
 function saveCover() {
     if(searchSaved(currentCover) !== true){
       savedCovers.push(currentCover)
-      savedCoversSection.innerHTML +=
-      `<section class="mini-cover">
-      <img class="mini-cover" src="${currentCover.coverImg}">
-      <h2 class="cover-title">${currentCover.title}</h2>
-      <h3 class="tagline">A tale of <span class="tagline-1">${currentCover.tagline1}</span> and <span class="tagline-2">${currentCover.tagline2}</span>
+      for (var i = 0; i < savedCovers.length; i++) {
+        savedCoversSection.innerHTML +=
+      `<section class="mini-cover" id ="${savedCovers[i].id}>
+      <img class="mini-cover" src="${savedCovers[i].coverImg}">
+      <h2 class="cover-title">${savedCovers[i].title}</h2>
+      <h3 class="tagline">A tale of <span class="tagline-1">${savedCovers[i].tagline1}</span> and <span class="tagline-2">${savedCovers[i].tagline2}</span>
       </h3>
-      <img class="overlay" src="./assets/overlay.png">
     </section>`
-    }
+      }
   }
+}
 
- 
+// function renderSavedCovers() {
+//   for (var i = 0; i < savedCovers.length; i++) {
+//     savedCoversSection.innerHTML +=
+//   `<section class="mini-cover" id ="${savedCovers[i].id}>
+//   <img class="mini-cover" src="${savedCovers[i].coverImg}">
+//   <h2 class="cover-title">${savedCovers[i].title}</h2>
+//   <h3 class="tagline">A tale of <span class="tagline-1">${savedCovers[i].tagline1}</span> and <span class="tagline-2">${savedCovers[i].tagline2}</span>
+//   </h3>
+// </section>`
+//   }
+// }
 
+
+function deleteCover(event) {
+  console.dir(event)
+  if (event.target.classList.contains('mini-cover')) {
+      event.target.remove();
+  }
+}

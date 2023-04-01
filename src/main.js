@@ -192,6 +192,19 @@ function deleteCover(event) {
   }
 }
 
+function changeMainCover(event) {
+  var index = getIndex();
+
+  if (event.target.className === 'cover-image'){
+    mainCover.src = covers[index.coverIndex];
+  } else if (event.target.className === 'cover-title'){
+    title.innerHTML = titles[index.titlesIndex];
+  } else if (event.target.className === 'tagline'){
+    tagline.innerHTML = `A tale of ${descriptors[index.taglineIndex]} and ${descriptors[index.taglineIndex2]}`;
+  } else {
+    return;
+  }
+}
 
 // function displayLargeCover(event) {
 //   switchHomeView();

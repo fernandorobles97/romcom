@@ -128,6 +128,7 @@ function randomCover() {
   var index = getIndex();
  
   currentCover = createCover(covers[index.coverIndex],titles[index.titlesIndex],descriptors[index.taglineIndex], descriptors[index.taglineIndex2]);
+  
   displayMainCover(currentCover);
  
   return currentCover;
@@ -196,11 +197,18 @@ function changeMainCover(event) {
   var index = getIndex();
 
   if (event.target.className === 'cover-image'){
-    mainCover.src = covers[index.coverIndex];
+    currentCover.coverImg = covers[index.coverIndex];
+    displayMainCover(currentCover);
+    
   } else if (event.target.className === 'cover-title'){
-    title.innerHTML = titles[index.titlesIndex];
+    currentCover.title = titles[index.titlesIndex];
+    displayMainCover(currentCover);
+  
   } else if (event.target.className === 'tagline'){
-    tagline.innerHTML = `A tale of ${descriptors[index.taglineIndex]} and ${descriptors[index.taglineIndex2]}`;
+    currentCover.tagline1 = descriptors[index.taglineIndex];
+    currentCover.tagline2 = descriptors[index.taglineIndex2]
+    displayMainCover(currentCover);
+    
   } else {
     return;
   }

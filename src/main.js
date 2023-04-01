@@ -226,6 +226,5 @@ function displayLargeCover(event) {
   } else if (event.detail === 2){
     clearTimeout(timer);
     deleteCover(event);
-    switchSavedView();
   }
 }

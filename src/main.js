@@ -31,6 +31,8 @@ homeButton.addEventListener('click', switchHomeView);
 makeBookButton.addEventListener('click', makeBookClick);
 saveCoverButton.addEventListener('click', saveCover);
 savedCoversSection.addEventListener('dblclick', deleteCover);
+homeView.addEventListener('click', changeMainCover);
+// savedCoversSection.addEventListener('click', displayLargeCover)
 
 // Create your event handlers and other functions here 👇
 function createCover(imgSrc, title, descriptor1, descriptor2) {
@@ -85,7 +87,11 @@ function switchHomeView() {
 function makeBookClick(event) {
   event.preventDefault();
 
-  makeBook();
+  if (!coverInput.value || !titleInput.value || !descriptor1Input.value || !descriptor2.value){
+    return alert('Missing Data! Please fill out entire form');
+} else {
+    makeBook();
+  }
 }
 
 function saveUserData() {
@@ -185,3 +191,10 @@ function deleteCover(event) {
     event.target.parentElement.remove();
   }
 }
+
+
+// function displayLargeCover(event) {
+//   switchHomeView();
+// console.dir(event.target.id)
+//   // displayMainCover()
+// }

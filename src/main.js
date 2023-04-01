@@ -18,7 +18,6 @@ var descriptor1Input = document.querySelector('#descriptor1');
 var descriptor2Input = document.querySelector('#descriptor2');
 var form = document.querySelector('form');
 var currentCover;
-var clicks = 0;
 var savedCovers = [
   createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
 ];
@@ -215,10 +214,8 @@ function changeMainCover(event) {
 }
 
 function displayLargeCover(event) {
-  clicks++;
-  if (clicks === 1){
-    id = setTimeout(() => {
-      clicks = 0;
+  if (event.detail === 1){
+    timer = setTimeout(() => {
       for (var i= 0; i < savedCovers.length; i++){
       if (savedCovers[i].id === parseInt(event.target.id)){
         displayMainCover(savedCovers[i]);
@@ -226,11 +223,9 @@ function displayLargeCover(event) {
       }
       switchHomeView();
     }, 250)
-  } else if (clicks === 2){
-    clearTimeout(id);
-    clicks = 0;
+  } else if (event.detail === 2){
+    clearTimeout(timer);
     deleteCover(event);
     switchSavedView();
- }
+  }
 }
- 

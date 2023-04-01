@@ -17,10 +17,11 @@ var titleInput = document.querySelector('#title');
 var descriptor1Input = document.querySelector('#descriptor1');
 var descriptor2Input = document.querySelector('#descriptor2');
 var form = document.querySelector('form');
+var currentCover;
+var clicks = 0;
 var savedCovers = [
   createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
 ];
-var currentCover;
 
 // Add your event listeners here 
 window.addEventListener('load', randomCover);
@@ -30,9 +31,8 @@ viewSavedButton.addEventListener('click', switchSavedView);
 homeButton.addEventListener('click', switchHomeView);
 makeBookButton.addEventListener('click', makeBookClick);
 saveCoverButton.addEventListener('click', saveCover);
-savedCoversSection.addEventListener('dblclick', deleteCover);
 homeView.addEventListener('click', changeMainCover);
-// savedCoversSection.addEventListener('click', displayLargeCover)
+savedCoversSection.addEventListener('click', displayLargeCover)
 
 // Create your event handlers and other functions here 👇
 function createCover(imgSrc, title, descriptor1, descriptor2) {
@@ -206,8 +206,23 @@ function changeMainCover(event) {
   }
 }
 
-// function displayLargeCover(event) {
-//   switchHomeView();
-// console.dir(event.target.id)
-//   // displayMainCover()
-// }
+function displayLargeCover(event) {
+  clicks++;
+  if (clicks === 1){
+    id = setTimeout(() => {
+      clicks = 0;
+      for (var i= 0; i < savedCovers.length; i++){
+      if (savedCovers[i].id === parseInt(event.target.id)){
+        displayMainCover(savedCovers[i]);
+        }
+      }
+      switchHomeView();
+    }, 250)
+  } else if (clicks === 2){
+    clearTimeout(id);
+    clicks = 0;
+    deleteCover(event);
+    switchSavedView();
+ }
+}
+ 

@@ -17,10 +17,11 @@ var titleInput = document.querySelector('#title');
 var descriptor1Input = document.querySelector('#descriptor1');
 var descriptor2Input = document.querySelector('#descriptor2');
 var form = document.querySelector('form');
+var currentCover;
+var clicks = 0;
 var savedCovers = [
   createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
 ];
-var currentCover;
 
 // Add your event listeners here 
 window.addEventListener('load', randomCover);
@@ -30,7 +31,8 @@ viewSavedButton.addEventListener('click', switchSavedView);
 homeButton.addEventListener('click', switchHomeView);
 makeBookButton.addEventListener('click', makeBookClick);
 saveCoverButton.addEventListener('click', saveCover);
-savedCoversSection.addEventListener('dblclick', deleteCover);
+homeView.addEventListener('click', changeMainCover);
+savedCoversSection.addEventListener('click', displayLargeCover)
 
 // Create your event handlers and other functions here 👇
 function createCover(imgSrc, title, descriptor1, descriptor2) {
@@ -85,7 +87,11 @@ function switchHomeView() {
 function makeBookClick(event) {
   event.preventDefault();
 
-  makeBook();
+  if (!coverInput.value || !titleInput.value || !descriptor1Input.value || !descriptor2.value){
+    return alert('Missing Data! Please fill out entire form');
+} else {
+    makeBook();
+  }
 }
 
 function saveUserData() {
@@ -122,6 +128,7 @@ function randomCover() {
   var index = getIndex();
  
   currentCover = createCover(covers[index.coverIndex],titles[index.titlesIndex],descriptors[index.taglineIndex], descriptors[index.taglineIndex2]);
+  
   displayMainCover(currentCover);
  
   return currentCover;
@@ -185,3 +192,45 @@ function deleteCover(event) {
     event.target.parentElement.remove();
   }
 }
+
+function changeMainCover(event) {
+  var index = getIndex();
+
+  if (event.target.className === 'cover-image'){
+    currentCover.coverImg = covers[index.coverIndex];
+    displayMainCover(currentCover);
+    
+  } else if (event.target.className === 'cover-title'){
+    currentCover.title = titles[index.titlesIndex];
+    displayMainCover(currentCover);
+  
+  } else if (event.target.className === 'tagline'){
+    currentCover.tagline1 = descriptors[index.taglineIndex];
+    currentCover.tagline2 = descriptors[index.taglineIndex2]
+    displayMainCover(currentCover);
+    
+  } else {
+    return;
+  }
+}
+
+function displayLargeCover(event) {
+  clicks++;
+  if (clicks === 1){
+    id = setTimeout(() => {
+      clicks = 0;
+      for (var i= 0; i < savedCovers.length; i++){
+      if (savedCovers[i].id === parseInt(event.target.id)){
+        displayMainCover(savedCovers[i]);
+        }
+      }
+      switchHomeView();
+    }, 250)
+  } else if (clicks === 2){
+    clearTimeout(id);
+    clicks = 0;
+    deleteCover(event);
+    switchSavedView();
+ }
+}
+ 
